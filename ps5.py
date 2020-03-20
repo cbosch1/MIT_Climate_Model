@@ -163,9 +163,13 @@ def generate_models(x, y, degs):
         a list of pylab arrays, where each array is a 1-d array of coefficients
         that minimizes the squared error of the fitting polynomial
     """
-    # TODO
-    pass
+    models = []
 
+    for i in degs:
+        model = pylab.polyfit(x, y, i)
+        models.append(model)
+
+    return models
 
 def r_squared(y, estimated):
     """
@@ -180,8 +184,12 @@ def r_squared(y, estimated):
     Returns:
         a float for the R-squared error term
     """
-    # TODO
-    pass
+    mean = y.mean()
+
+    num = sum((y - estimated)**2)
+    den = sum((y - mean)**2)
+
+    return 1 - (num/den)
 
 def evaluate_models_on_training(x, y, models):
     """
