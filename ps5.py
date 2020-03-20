@@ -217,8 +217,22 @@ def evaluate_models_on_training(x, y, models):
     Returns:
         None
     """
-    # TODO
-    pass
+    for model in models:
+        model_y = pylab.polyval(model, x)
+
+        deg = len(model) - 1
+        SE = ""
+        if deg == 1:
+            SE = ("SE: " + str(se_over_slope(x, y, model_y, model)))
+
+        pylab.figure()
+        pylab.plot(x, y, "bo", label = "Observed Data")
+        pylab.plot(x, model_y, "r-", label = "Model")
+        pylab.xlabel("Year")
+        pylab.ylabel("Temperature")
+        pylab.title("Degree: " + str(deg) + "\n" +
+                    "r-sq: " + str(r_squared(y, model_y)) + SE)
+        pylab.show()
 
 def gen_cities_avg(climate, multi_cities, years):
     """
@@ -318,10 +332,20 @@ def evaluate_models_on_testing(x, y, models):
 
 if __name__ == '__main__':
 
-    pass 
-
     # Part A.4
-    # TODO: replace this line with your code
+    world = Climate("data.csv")
+    years = pylab.array(TRAINING_INTERVAL)
+    temps = []
+
+    for year in years:
+        temp = world.get_daily_temp("NEW YORK", 1, 10, year)
+        temps.append(temp)
+
+    temps = pylab.array(temps)
+
+    models = generate_models(years, temps, [1])
+
+    evaluate_models_on_training(years, temps, models)
 
     # Part B
     # TODO: replace this line with your code
