@@ -342,7 +342,6 @@ def evaluate_models_on_testing(x, y, models):
 
 if __name__ == '__main__':
 
-    # Part A
     world = Climate("data.csv")
     years = pylab.array(TRAINING_INTERVAL)
     temps = []
@@ -351,13 +350,16 @@ if __name__ == '__main__':
     # for year in years:
     #     temp = world.get_daily_temp("NEW YORK", 1, 10, year)
     #     temps.append(temp)
+    #     temps = pylab.array(temps)
 
     # Part A.2
-    for year in years:
-        temp = sum(world.get_yearly_temp("NEW YORK", year))
-        temps.append(temp)
+    # for year in years:
+    #     temp = sum(world.get_yearly_temp("NEW YORK", year))
+    #     temps.append(temp)
+    #     temps = pylab.array(temps)
 
-    temps = pylab.array(temps)
+    # Part B
+    temps = gen_cities_avg(world, CITIES, years)
 
     models = generate_models(years, temps, [1])
 
