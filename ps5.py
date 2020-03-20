@@ -249,8 +249,18 @@ def gen_cities_avg(climate, multi_cities, years):
         this array corresponds to the average annual temperature over the given
         cities for a given year.
     """
-    # TODO
-    pass
+    year_temps = []
+
+    for year in years:
+        city_temps = []
+
+        for city in multi_cities:
+            yearly_temp = climate.get_yearly_temp(city, year)
+            city_temps.append(sum(yearly_temp) / len(yearly_temp))
+        
+        year_temps.append(sum(city_temps) / len(multi_cities))
+
+    return pylab.array(year_temps)
 
 def moving_average(y, window_length):
     """
@@ -332,13 +342,19 @@ def evaluate_models_on_testing(x, y, models):
 
 if __name__ == '__main__':
 
-    # Part A.4
+    # Part A
     world = Climate("data.csv")
     years = pylab.array(TRAINING_INTERVAL)
     temps = []
 
+    # Part A.1
+    # for year in years:
+    #     temp = world.get_daily_temp("NEW YORK", 1, 10, year)
+    #     temps.append(temp)
+
+    # Part A.2
     for year in years:
-        temp = world.get_daily_temp("NEW YORK", 1, 10, year)
+        temp = sum(world.get_yearly_temp("NEW YORK", year))
         temps.append(temp)
 
     temps = pylab.array(temps)
